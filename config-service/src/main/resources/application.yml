@@ -1,10 +1,17 @@
 server:
   port: 8888
 spring:
+  profiles:
+    active: git, vault
   cloud:
     config:
       server:
+        vault:
+          skip-ssl-validation: true
+          kv-version: 2
+          order: 1
         git:
           uri: file://${HOME}/config-repo
+          order: 2
 
 
