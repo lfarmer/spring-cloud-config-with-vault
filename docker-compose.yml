@@ -8,7 +8,7 @@ services:
       SPRING_CLOUD_CONFIG_SERVER_GIT_URI: file://config-repo
       SPRING_CLOUD_CONFIG_SERVER_VAULT_HOST: vault
     volumes:
-      - "/Users/leafarmer/config-repo:/config-repo"
+      - "${HOME}/config-repo:/config-repo"
   vault:
     image: vault
     ports:
