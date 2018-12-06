@@ -1,0 +1,10 @@
+version: '3'
+services:
+  config-service:
+    image: example/config-service
+    ports:
+      - "8888:8888"
+    environment:
+      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: file://config-repo
+    volumes:
+      - "/Users/leafarmer/config-repo:/config-repo"
