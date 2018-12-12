@@ -1,31 +1,38 @@
 package com.example.configservice;
 
 import io.pivotal.spring.cloud.vault.service.common.VaultServiceInfo;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.Cloud;
-import org.springframework.cloud.CloudFactory;
 import org.springframework.cloud.config.server.EnableConfigServer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
+import org.springframework.cloud.config.server.environment.VaultEnvironmentRepository;
 
+import static org.springframework.test.util.ReflectionTestUtils.getField;
+
+@Slf4j
 @EnableConfigServer
 @SpringBootApplication
-public class ConfigServiceApplication {
+public class ConfigServiceApplication implements CommandLineRunner {
 
-    @Bean
-    @Profile("cloud")
-    public void something() {
-        System.out.println(System.getenv("VCAP_APPLICATION"));
-        System.out.println(System.getenv("VCAP_SERVICES"));
-        CloudFactory cloudFactory = new CloudFactory();
-        Cloud cloud = cloudFactory.getCloud();
-        VaultServiceInfo myService = (VaultServiceInfo) cloud.getServiceInfo("my-vault");
-        myService.getUri();
-        myService.getToken();
-    }
+    @Autowired
+    private VaultServiceInfo vaultServiceInfo;
+
+    @Autowired
+    private VaultEnvironmentRepository vaultEnvironmentRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(ConfigServiceApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        log.info("Project configured with:");
+        log.info("Vault Service Info: {}", vaultServiceInfo.toString());
+        log.info("Vault Repo Info: {}://{}:{}",
+                getField(vaultEnvironmentRepository, "scheme"),
+                getField(vaultEnvironmentRepository, "host"),
+                getField(vaultEnvironmentRepository, "port"));
     }
 }

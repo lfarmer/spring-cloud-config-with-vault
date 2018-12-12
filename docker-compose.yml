@@ -24,7 +24,6 @@ services:
           ]
         }
       SPRING_CLOUD_CONFIG_SERVER_GIT_URI: file://config-repo
-      SPRING_CLOUD_CONFIG_SERVER_VAULT_HOST: vault
       SPRING_PROFILES_ACTIVE: git,vault,cloud
     volumes:
       - "${HOME}/config-repo:/config-repo"

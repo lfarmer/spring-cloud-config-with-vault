@@ -1,0 +1,13 @@
+---
+applications:
+- name: spring-cloud-config-with-vault
+  disk_quota: 512M
+  path: config-service/target/config-service-0.0.1-SNAPSHOT.jar
+  instances: 1
+  memory: 1GB
+  services:
+    - my-vault
+  env:
+    SPRING_PROFILES_ACTIVE: cloud, vault
+  timeout: 120
+
