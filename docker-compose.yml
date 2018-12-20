@@ -1,5 +1,13 @@
 version: '3'
 services:
+  config-service-client:
+    image: example/config-service-client
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+      SPRING_CLOUD_CONFIG_ENABLED: "true"
+      SPRING_CLOUD_CONFIG_TOKEN: roottoken
   config-service:
     image: example/config-service
     ports:

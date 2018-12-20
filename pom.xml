@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>config-service-client</module>
         <module>config-service</module>
     </modules>
 </project>
