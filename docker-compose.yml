@@ -36,4 +36,9 @@ services:
     environment:
       - VAULT_ADDR=http://vault:8200
       - VAULT_TOKEN=roottoken
-    command: vault kv put secret/config-service-client config.name=secret
+    volumes:
+      - "./vault/policies:/policies"
+    command: >
+      sh -c "vault policy write config-service-client-policy /policies/config-service-client-policy.hcl &&
+      vault token create -policy=config-service-client-policy &&
+      vault kv put secret/config-service-client config.name=secret"
