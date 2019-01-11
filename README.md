@@ -27,7 +27,7 @@ within the docker-compose file and replaces its value.
 
 Now:
 
-1. $`docker-compose restart config-service-client`
-1. $`curl -X "GET" "http://localhost:8080/config"`
+1. $`docker-compose up -d config-service-client`
+1. $`curl -X "GET" "http://localhost:8080/config" -w '\n'`
 
 Note: This should return secret showing that the new token works correctly

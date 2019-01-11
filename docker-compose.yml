@@ -2,16 +2,20 @@ version: '3'
 services:
   config-service-client:
     image: example/config-service-client
+    depends_on:
+      - config-service
     ports:
       - "8080:8080"
     environment:
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
       SPRING_CLOUD_CONFIG_ENABLED: "true"
-      SPRING_CLOUD_CONFIG_TOKEN: roottoken
+      SPRING_CLOUD_CONFIG_TOKEN: s.6zlOlGmCDv0CAm7YueQD7vVJ
   config-service:
     image: example/config-service
     ports:
       - "8888:8888"
+    depends_on:
+      - vault-populator
     environment:
       SPRING_CLOUD_CONFIG_SERVER_GIT_URI: file://config-repo
       SPRING_CLOUD_CONFIG_SERVER_VAULT_HOST: vault
